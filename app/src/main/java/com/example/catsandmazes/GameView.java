@@ -1,3 +1,21 @@
+/*
+Hi
+Right now I need to finish the following functionality
+    Allow user to move cat using arrows DONE!!!
+        Decrement energy as you go DONE!!!
+        TODO: OPTIMIZE CODE SO THAT IT RUNS SMOOTHER
+        I just don't like that it takes a while to jump
+    allow user to drag the background to look ahead. CONDITIONAL DONE!!!
+        TODO: OPTIMIZE CODE SO THAT IT RUNS SMOOTHER
+    Create new sprite for the end of the maze (w a fish xd)
+    Once cat is ontop of final
+        Show most optimal route
+        Show victory layout
+    Energy == 0
+        Show most optimal route
+        Show losing layout
+ */
+
 package com.example.catsandmazes;
 
 import android.app.Activity;
@@ -9,6 +27,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.graphics.Bitmap;
 import android.content.Context;
@@ -44,9 +63,12 @@ public class GameView extends View {
 
     // Coordinates
     int catX, catY;
+    int catIndexX, catIndexY;
+    float prevX;
+    float prevY;
 
     // reference rectangles
-    Rect rectBackground, rectCat, rectPath, rectLightning, rectLeft, rectRight, rectDown, rectUp;
+    Rect rectBackground, rectCat, rectPath, rectLightning, rectLeft, rectRight, rectDown, rectUp, rectArrows;
     Context context;
     Handler handler;
     final long UPDATE_MILLS = 30;
@@ -91,6 +113,7 @@ public class GameView extends View {
         rectUp = new Rect(dWidth-dWidth*2/9, dHeight-dWidth*3/9, dWidth-dWidth/9,dHeight-dWidth*2/9);
         rectLeft = new Rect(dWidth-dWidth*3/9, dHeight-dWidth*2/9, dWidth-dWidth*2/9,dHeight-dWidth/9);
         rectRight = new Rect(dWidth-dWidth/9, dHeight-dWidth*2/9, dWidth,dHeight-dWidth/9);
+        rectArrows = new Rect(dWidth-dWidth*3/9, dHeight-dWidth*3/9, dWidth, dHeight);
 
         handler = new Handler();
         runnable = new Runnable() {
@@ -123,9 +146,11 @@ public class GameView extends View {
                     // if it is the start of the maze
                     // set cat's coordinates
                     if (maze0[i][j] == 2) {
+                        catIndexX = j;
+                        catIndexY = i;
                         catX = pathX - 20;
                         catY = pathY - dWidth*2363/(5*1796);
-                        rectCat = new Rect(catX,catY, catX+dWidth/4, catY+dWidth*2363/(4*1796));
+                        rectCat.set(catX,catY, catX+dWidth/4, catY+dWidth*2363/(4*1796));
                     }
                 }
                 pathX += dWidth/4;
@@ -155,5 +180,112 @@ public class GameView extends View {
         canvas.drawBitmap(arrowLeft, null, rectLeft, null);
         canvas.drawBitmap(arrowRight, null, rectRight, null);
         handler.postDelayed(runnable, UPDATE_MILLS);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        float x = event.getX();
+        float y = event.getY();
+        float shiftX = 0;
+        float shiftY = 0;
+        int action = event.getAction();
+        if (action == MotionEvent.ACTION_DOWN) {
+            //Check if the x and y position of the touch is inside the bitmap
+            if (rectArrows.contains((int) x, (int) y)) {
+                if(rectDown.contains((int) x, (int) y))
+                {
+                    Log.d("TOUCHED", "Down. X: " + x + " Y: " + y);
+                    //Bitmap touched
+
+                    // Check if there is path
+                    // move cat
+                    if (catIndexY + 1 < maze0.length && catIndexY + 1 >= 0) {
+                        if (maze0[catIndexY+1][catIndexX] > 0) {
+                            energy--;
+                            catIndexY++;
+                            catX -= dWidth/12;
+                            catY += dWidth*27/224;
+                            rectCat.set(catX,catY, catX+dWidth/4, catY+dWidth*2363/(4*1796));
+                        }
+                    }
+                    // otherwise do nothing
+                }
+                else if(rectUp.contains((int) x, (int) y))
+                {
+                    Log.d("TOUCHED", "Up. X: " + x + " Y: " + y);
+                    //Bitmap touched
+
+                    // Check if there is path
+                    // move cat
+                    if (catIndexY - 1 < maze0.length && catIndexY - 1 >= 0){
+                        if (maze0[catIndexY-1][catIndexX] > 0) {
+                            energy--;
+                            catIndexY--;
+                            catX += dWidth/12;
+                            catY -= dWidth*27/224;
+                            rectCat.set(catX,catY, catX+dWidth/4, catY+dWidth*2363/(4*1796));
+                        }
+                    }
+                    // otherwise do nothing
+                }
+                else if(rectLeft.contains((int) x, (int) y))
+                {
+                    Log.d("TOUCHED", "Left. X: " + x + " Y: " + y);
+                    //Bitmap touched
+                    // Check if there is path
+                    // move cat
+                    if (catIndexX - 1 < maze0[0].length && catIndexX - 1 >= 0) {
+                        if (maze0[catIndexY][catIndexX-1] > 0) {
+                            energy--;
+                            catIndexX--;
+                            catX -= dWidth/4;
+                            rectCat.set(catX,catY, catX+dWidth/4, catY+dWidth*2363/(4*1796));
+                        }
+                    }
+                    // otherwise do nothing
+                }
+                else if(rectRight.contains((int) x, (int) y))
+                {
+                    Log.d("TOUCHED", "Right. X: " + x + " Y: " + y);
+                    //Bitmap touched
+                    // Check if there is path
+                    // move cat
+                    if (catIndexX + 1 < maze0[0].length && catIndexX + 1 >= 0){
+                        if (maze0[catIndexY][catIndexX+1] > 0) {
+                            energy--;
+                            catIndexX++;
+                            catX += dWidth/4;
+                            rectCat.set(catX,catY, catX+dWidth/4, catY+dWidth*2363/(4*1796));
+                        }
+                    }
+                    // otherwise do nothing
+                }
+            }
+            prevX = event.getX();
+            prevY = event.getY();
+            Log.d("TOUCHED", "Prev assigned!! prevX: " + prevX + " prevY: " + prevY);
+            return true;
+        }
+        if (action == MotionEvent.ACTION_MOVE) {
+            Log.d("TOUCHED", "Scrool. X: " + x + " Y: " + y + "PrevX:" + prevX);
+            // get movement
+            shiftX = (prevX - x)/2;
+            shiftY = (prevY - y)/2;
+
+            Log.d("TOUCHED", "Shift: " + shiftX);
+            // let's focus on x displacement
+            // displace y coordinates
+            // displace x coordinates
+            catX -= (int) shiftX;
+            catY -= (int) shiftY;
+            rectCat.set(catX,catY, catX+dWidth/4, catY+dWidth*2363/(4*1796));
+            for (Path p : paths) {
+                p.pathX -= (int) shiftX;
+                p.pathY -= (int) shiftY;
+                p.rectPath.set(p.pathX, p.pathY, p.pathX+dWidth/4, p.pathY+dWidth*235/1568);
+            }
+        }
+        return true;
     }
 }
