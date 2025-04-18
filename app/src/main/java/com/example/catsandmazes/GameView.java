@@ -8,7 +8,7 @@ Right now I need to finish the following functionality
     allow user to drag the background to look ahead. CONDITIONAL DONE!!!
         TODO: OPTIMIZE CODE SO THAT IT RUNS SMOOTHER
     Create new sprite for the end of the maze (w a fish xd)
-    Once cat is ontop of final
+    Once cat is on top of final
         Show most optimal route
         Show victory layout
     Energy == 0
@@ -142,7 +142,7 @@ public class GameView extends View {
                     previousX = pathX;
                 }
                 if (maze0[i][j] > 0) {
-                    paths.add(new Path(context, pathBitmap, pathX, pathY, dWidth));
+                    paths.add(new Path(context, pathBitmap, pathX, pathY, dWidth, maze0[i][j]));
                     // if it is the start of the maze
                     // set cat's coordinates
                     if (maze0[i][j] == 2) {
@@ -183,21 +183,18 @@ public class GameView extends View {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
+    public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        float shiftX = 0;
-        float shiftY = 0;
+        float shiftX;
+        float shiftY;
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
             //Check if the x and y position of the touch is inside the bitmap
             if (rectArrows.contains((int) x, (int) y)) {
-                if(rectDown.contains((int) x, (int) y))
-                {
+                if(rectDown.contains((int) x, (int) y)) {
                     Log.d("TOUCHED", "Down. X: " + x + " Y: " + y);
                     //Bitmap touched
-
                     // Check if there is path
                     // move cat
                     if (catIndexY + 1 < maze0.length && catIndexY + 1 >= 0) {
@@ -211,11 +208,9 @@ public class GameView extends View {
                     }
                     // otherwise do nothing
                 }
-                else if(rectUp.contains((int) x, (int) y))
-                {
+                else if(rectUp.contains((int) x, (int) y)) {
                     Log.d("TOUCHED", "Up. X: " + x + " Y: " + y);
                     //Bitmap touched
-
                     // Check if there is path
                     // move cat
                     if (catIndexY - 1 < maze0.length && catIndexY - 1 >= 0){
@@ -229,8 +224,7 @@ public class GameView extends View {
                     }
                     // otherwise do nothing
                 }
-                else if(rectLeft.contains((int) x, (int) y))
-                {
+                else if(rectLeft.contains((int) x, (int) y)) {
                     Log.d("TOUCHED", "Left. X: " + x + " Y: " + y);
                     //Bitmap touched
                     // Check if there is path
@@ -245,8 +239,7 @@ public class GameView extends View {
                     }
                     // otherwise do nothing
                 }
-                else if(rectRight.contains((int) x, (int) y))
-                {
+                else if(rectRight.contains((int) x, (int) y)) {
                     Log.d("TOUCHED", "Right. X: " + x + " Y: " + y);
                     //Bitmap touched
                     // Check if there is path
