@@ -60,6 +60,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.index);
     }
 
+    public void Friends(View view) {
+        setContentView(R.layout.friends);
+    }
+    public void account(View view) {
+        setContentView(R.layout.account);
+    }
+
     // Save difficulty to SharedPreferences
     private void saveDifficulty() {
         SharedPreferences prefs = getSharedPreferences("game_settings", MODE_PRIVATE);

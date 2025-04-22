@@ -31,15 +31,11 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:paddingHorizontal="32dp"
             android:paddingTop="12dp">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/circle_button" />
+
 
             <!-- Left Arrow -->
             <Button
@@ -54,10 +50,11 @@
             <TextView
                 android:id="@+id/difficultyText"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:text="Easy"
                 android:gravity="center"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="70dp"
+                android:textSize="32sp"
                 android:textColor="@android:color/white"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="@font/caveatbrushregular" />
@@ -77,25 +74,23 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:paddingHorizontal="32dp"
             android:paddingTop="12dp">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/circle_button" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:text="Friends"
-                android:gravity="center"
-                android:paddingHorizontal="20dp"
+                android:fontFamily="@font/caveatbrushregular"
+                android:textSize="32sp"
                 android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"
-                android:fontFamily="@font/caveatbrushregular" />
+                android:backgroundTint="#2B85B8"
+                android:onClick="Friends"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="1dp" />
         </LinearLayout>
 
         <!-- Account Row -->
@@ -103,26 +98,30 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:paddingHorizontal="32dp"
             android:paddingTop="12dp">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/circle_button" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:text="Account"
-                android:gravity="center"
-                android:paddingHorizontal="20dp"
+                android:fontFamily="@font/caveatbrushregular"
+                android:textSize="32sp"
                 android:textColor="@android:color/white"
-                android:background="@drawable/rounded_button"
-                android:fontFamily="@font/caveatbrushregular" />
+                android:backgroundTint="#2B85B8"
+                android:onClick="account"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp" />
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:background="@drawable/settingscat"
+            android:gravity="center_horizontal" />
 
         <!-- Main Menu Button -->
         <Button
@@ -135,13 +134,8 @@
             android:backgroundTint="#2B85B8"
             android:onClick="MainMenu"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="1dp" />
 
-        <!-- Decorative Cat Image -->
-        <ImageView
-            android:layout_width="400dp"
-            android:layout_height="300dp"
-            android:background="@drawable/settingscat"
-            android:gravity="center_horizontal" />
+
     </LinearLayout>
 </ScrollView>

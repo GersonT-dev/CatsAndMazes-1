@@ -17,9 +17,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game Over"
+        android:text="Optimal  "
         android:fontFamily="@font/caveatbrushregular"
-        android:textSize="40sp"
+        android:textSize="60sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rounded_button"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Route "
+        android:fontFamily="@font/caveatbrushregular"
+        android:textSize="60sp"
         android:textColor="@android:color/white"
         android:background="@drawable/rounded_button"
         />
@@ -30,8 +39,8 @@
         android:layout_weight="0.5" />
 
     <ImageView
-        android:layout_width="400dp"
-        android:layout_height="469dp"
+        android:layout_width="200dp"
+        android:layout_height="235dp"
         android:background="@drawable/cat_sprite_happy"
         android:gravity="center_horizontal" />
 
@@ -45,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="Play Again"
         android:fontFamily="@font/caveatbrushregular"
-        android:textSize="32sp"
+        android:textSize="60sp"
         android:textColor="@android:color/white"
         android:backgroundTint="#2B85B8"
         android:onClick="MainMenu" />
